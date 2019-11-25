@@ -44,7 +44,8 @@ class MyTerminal(gtk.Window):
 
     def _evt_global_click(self, widget, event):
         if event.type == gdk.EventType.BUTTON_PRESS and event.button == 3:
-            self.cmenu.popup_at_pointer()
+            #self.cmenu.popup_at_pointer()
+            self.cmenu.popup(None, None, None, None, event.button, event.time)
 
         return True
 

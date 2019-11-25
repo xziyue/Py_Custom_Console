@@ -5,10 +5,11 @@
 
 ## Installation/Useage
 
-- Install the following packages with `apt`:
+- Make sure the following packages are installed in the system. Otherwise, install with `apt`:
     - libgtk2.0
     - libgtk-3-0
     - libgirepository1.0-dev
+    - libcairo2-dev
     - python-vte
 
 - Install dependent Python packages with `pip3 install -r requirements.txt`
