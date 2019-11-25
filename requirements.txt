@@ -1,0 +1,3 @@
+PyLaTeX>=1.3.0
+colour>=0.1.5
+pygobject>=3.26.1
