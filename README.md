@@ -12,7 +12,7 @@
     - python-vte
 
 - Install dependent Python packages with `pip3 install -r requirements.txt`
-- Run 'main.py' with Python3
+- Run `main.py` with Python3
 
 ## Rendering LaTeX
 
