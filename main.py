@@ -11,11 +11,15 @@ class MyTerminal(gtk.Window):
         self._init_binding()
         self._init_context_menu()
 
+    def _child_finished(self, *args):
+        print('child finished')
+        gtk.main_quit()
+
     def _init_terminal(self):
         envs = ['{}={}'.format(a, b) for a, b in os.environ.items()]
         # initialize vte terminal
         self.terminal = vte.Terminal()
-        self.terminal.spawn_sync(
+        succuess, self.terminal_pid = self.terminal.spawn_sync(
             vte.PtyFlags.DEFAULT,
             os.environ['HOME'],
             ['/bin/bash'],
@@ -23,7 +27,12 @@ class MyTerminal(gtk.Window):
             glib.SpawnFlags.DO_NOT_REAP_CHILD,
             None,
             None,)
+        if not succuess:
+            print('Unable to spawn VTE process', file=sys.stderr)
+            exit(-1)
         self.add(self.terminal)
+        self.terminal.watch_child(self.terminal_pid)
+        self.terminal.connect('child-exited', self._child_finished)
 
     def _init_object(self):
         self.cmenu = gtk.Menu.new()
@@ -44,7 +53,6 @@ class MyTerminal(gtk.Window):
 
     def _evt_menuitem_paste(self, event):
         self.terminal.paste_clipboard()
-
 
     def _evt_menuitem_copy_html(self, event):
         self.terminal.copy_clipboard_format(vte.Format.HTML)
